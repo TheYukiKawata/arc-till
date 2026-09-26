@@ -1,0 +1,7 @@
+{
+  "name": "arc-till",
+  "main": "worker/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "build": { "command": "bun run build" },
+  "rules": [{ "type": "Text", "globs": ["**/*.html", "**/*.css", "**/*.svg", "**/public/app.js"], "fallthrough": false }]
+}
