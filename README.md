@@ -14,6 +14,7 @@ When the merchant wants the money, `sweepMany()` deploys the deposit addresses t
 
 | | |
 |---|---|
+| Live demo | https://arc-till.yukikawata.workers.dev |
 | Till contract | [`0xF491FB15A41F18ce9CF8d8dE4bc83dD53dB52F07`](https://explorer.arc.io/address/0xF491FB15A41F18ce9CF8d8dE4bc83dD53dB52F07) |
 | Deploy tx | [`0xda584fd4…aeb7668`](https://explorer.arc.io/tx/0xda584fd48f5b5e127daf3e66a85d10704ce903070351e91613801e5aeaeb7668) (block 22893865) |
 | Demo sale, paid | [`0x9c977bb7…668be8ab`](https://explorer.arc.io/tx/0x9c977bb7f03f8dbc2307b0ca054946959816c4830d07ff75d4800f20668be8ab): 0.02 USDC, shown as paid on the page 1.1 s after sending |
@@ -37,7 +38,7 @@ cd ../page && bun install && bun run gen && bun run typecheck && bun run build
 bunx serve public
 ```
 
-Any static host can serve `page/public`, because the Arc RPC allows requests from any origin. Sweeping needs a browser wallet on Arc.
+Any static host can serve `page/public`, because the Arc RPC allows requests from any origin. `bun run deploy` serves it from a Cloudflare Worker. Sweeping needs a browser wallet on Arc.
 
 To deploy the contract, set `DEPLOYER_MNEMONIC` to the mnemonic of a funded wallet (it uses the first account) and run `bun scripts/deploy.ts mainnet --send` in `page/`.
 
