@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arc Till</title>
+    <meta name="description" content="Take in-person USDC payments on Arc with a QR code. Each sale gets its own deposit address." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="bar">
+      <p class="brand">Arc Till</p>
+      <p class="network" id="network-name">Arc</p>
+    </header>
+
+    <main>
+      <section id="setup-view" class="view" hidden aria-labelledby="setup-heading">
+        <h1 id="setup-heading">Take USDC in person</h1>
+        <p class="intro">
+          Arc Till turns a phone or tablet into a card reader for USDC on Arc. Type an amount and show the QR code.
+          Each sale gets its own deposit address, so the till sees the payment land and marks it final in about a
+          second. Customers pay from any wallet, an exchange, or another chain through CCTP.
+        </p>
+        <p class="muted">Sales go to your payout address. The till never asks for a private key.</p>
+        <form id="setup-form" class="stack">
+          <label for="shop-input">Shop name</label>
+          <input id="shop-input" name="shop" maxlength="40" autocomplete="organization" placeholder="Corner Coffee" />
+          <label for="payout-input">Payout address on Arc</label>
+          <input id="payout-input" name="payout" required spellcheck="false" autocomplete="off" placeholder="0x…" class="mono" />
+          <p class="error" id="setup-error" role="alert"></p>
+          <button type="submit">Save</button>
+        </form>
+      </section>
+
+      <section id="charge-view" class="view" hidden aria-labelledby="charge-heading">
+        <h1 id="charge-heading" class="visually-hidden">New sale</h1>
+        <form id="charge-form" class="charge">
+          <label for="amount-input" class="muted">Amount in USDC</label>
+          <input
+            id="amount-input"
+            name="amount"
+            inputmode="decimal"
+            autocomplete="off"
+            required
+            placeholder="0.00"
+            class="amount"
+          />
+          <label for="note-input" class="muted">Note, optional</label>
+          <input id="note-input" name="note" maxlength="60" autocomplete="off" placeholder="2 flat whites" />
+          <p class="error" id="charge-error" role="alert"></p>
+          <button type="submit" class="big">Show QR</button>
+        </form>
+
+        <div class="orders">
+          <div class="orders-head">
+            <h2>Sales on this device</h2>
+            <p class="muted" id="orders-total"></p>
+          </div>
+          <ul id="orders-list" class="orders-list"></ul>
+          <p class="muted" id="orders-empty">No sales yet. Each sale shows up here with its status.</p>
+          <div class="sweep">
+            <p class="muted" id="sweep-status">
+              Paid sales wait in their own deposit addresses until you sweep them to your payout address.
+            </p>
+            <button type="button" id="sweep-button" class="quiet" disabled>Sweep paid sales</button>
+          </div>
+          <p class="footer-links">
+            <button type="button" id="change-payout" class="link">Change payout address</button>
+          </p>
+        </div>
+      </section>
+
+      <section id="order-view" class="view" hidden aria-labelledby="order-amount">
+        <p class="muted" id="order-shop"></p>
+        <h1 id="order-amount" class="order-amount"></h1>
+        <p class="muted" id="order-note"></p>
+        <div class="qr" id="order-qr" role="img" aria-label="QR code with the payment request"></div>
+        <p class="status" id="order-status" aria-live="polite"></p>
+        <details class="manual" id="order-manual">
+          <summary>Pay without scanning</summary>
+          <p>Send exactly <strong id="manual-amount"></strong> USDC on Arc to:</p>
+          <p class="mono address" id="order-address"></p>
+          <p class="muted">Native sends, USDC token transfers and CCTP transfers from other chains all count.</p>
+        </details>
+        <div class="order-actions">
+          <button type="button" id="order-done" class="big">New sale</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
